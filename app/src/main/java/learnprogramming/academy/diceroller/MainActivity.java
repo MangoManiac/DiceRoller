@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
        TextView tv =  this.findViewById(R.id.textView);
 
        Random r = new Random();
-       int number = r.nextInt(4);
+       int number = r.nextInt(10);
        tv.setText(Integer.toString(number));
     }
 
