@@ -11,11 +11,14 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
+
+    private int score =0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,11 +61,43 @@ public class MainActivity extends AppCompatActivity {
 
     public void on_button_click(View view){
 
-       TextView tv =  this.findViewById(R.id.textView);
+        // gv stands for generated view
+       TextView gv =  this.findViewById(R.id.generatedView);
 
        Random r = new Random();
-       int number = r.nextInt(10);
-       tv.setText(Integer.toString(number));
+       // Plus 1 because this way zero is not generated and number goes up to 6
+       int number = r.nextInt(6) +1;
+       gv.setText(Integer.toString(number));
+
+
+       EditText inputText = (EditText)findViewById(R.id.numberInput);
+
+       // catch the exception to prevent no input problem
+       try {
+           int guess = Integer.parseInt(inputText.getText().toString());
+           // sv stands for score view
+           TextView sv = this.findViewById(R.id.scoreView);
+
+
+           if(inputText == null){
+               inputText.setText("0");
+           }
+
+           //check number is within range
+           if(guess > 6 || guess < 1){
+               gv.setText("Invalid number");
+           }
+           inputText.setText("");
+           if(number == guess){
+               gv.setText("Congratulations");
+               this.score++;
+               sv.setText(Integer.toString(score));
+           }
+       }catch (NumberFormatException e){
+           gv.setText("No Input");
+       }
+
+
     }
 
 
